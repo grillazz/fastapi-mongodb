@@ -17,6 +17,7 @@ pytest-cov = "*"
 httpx = "*"
 requests = "*"
 icecream = "*"
+rich = "*"
 
 [dev-packages]
 
