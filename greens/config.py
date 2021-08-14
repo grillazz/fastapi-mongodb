@@ -1,11 +1,10 @@
 import logging
 import os
 from functools import lru_cache
-from typing import List
 
 from pydantic import BaseSettings
 
-log = logging.getLogger(__name__)
+log = logging.getLogger("uvicorn")
 
 
 class Settings(BaseSettings):
@@ -27,15 +26,14 @@ class Settings(BaseSettings):
     up: str = os.getenv("UP", "up")
     down: str = os.getenv("DOWN", "down")
     web_server: str = os.getenv("WEB_SERVER", "web_server")
-    cors_origins: List[str] = os.getenv("CORS_ORIGINS", "").split(",")
 
     db_url: str = os.getenv("MONGO_URL", "")
     db_name: str = os.getenv("MONGO_DB", "")
-    collection_name: str = os.getenv("MONGO_COLLECTION", "")
+    collection: str = os.getenv("MONGO_COLLECTION", "")
     test_db_name: str = os.getenv("MONGO_TEST_DB", "")
 
 
 @lru_cache()
 def get_settings():
-    log.info("Loading config settings from the environment...")
+    log.info("FARM message: Loading config settings from the environment...")
     return Settings()
