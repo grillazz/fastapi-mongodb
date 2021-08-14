@@ -28,3 +28,5 @@ services:
       - "MONGO_INITDB_DATABASE=${MONGO_DB}"
       - "MONGO_INITDB_ROOT_USERNAME=${MONGO_USER}"
       - "MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASS}"
+    command:
+      mongod --quiet --logpath /dev/null
