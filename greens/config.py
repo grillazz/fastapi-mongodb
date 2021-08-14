@@ -3,8 +3,14 @@ import os
 from functools import lru_cache
 
 from pydantic import BaseSettings
+from rich.logging import RichHandler
 
-log = logging.getLogger("uvicorn")
+FORMAT = "%(message)s"
+logging.basicConfig(
+    level="NOTSET", format=FORMAT, datefmt="[%X]", handlers=[RichHandler()]
+)
+
+log = logging.getLogger("rich")
 
 
 class Settings(BaseSettings):

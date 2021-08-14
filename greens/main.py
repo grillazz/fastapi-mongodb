@@ -1,11 +1,17 @@
 import logging
 
+from rich.logging import RichHandler
 from fastapi import FastAPI
 from motor.motor_asyncio import AsyncIOMotorClient
 
 from greens import config
 
-log = logging.getLogger("uvicorn")
+FORMAT = "%(message)s"
+logging.basicConfig(
+    level="NOTSET", format=FORMAT, datefmt="[%X]", handlers=[RichHandler()]
+)
+
+log = logging.getLogger("rich")
 global_settings = config.get_settings()
 
 app = FastAPI()
@@ -22,6 +28,7 @@ async def init_mongo() -> AsyncIOMotorClient:
 
 @app.on_event("startup")
 async def startup_event():
+    # TODO: add rich to log with emojis \m/
     log.info("FARM message: Starting greens on your farmland...")
     app.state.mongo_client, app.state.mongo_database, app.state.mongo = await init_mongo()
 
