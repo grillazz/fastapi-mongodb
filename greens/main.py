@@ -1,17 +1,9 @@
-import logging
-
-from rich.logging import RichHandler
 from fastapi import FastAPI
 from motor.motor_asyncio import AsyncIOMotorClient
-
 from greens import config
+from greens.utils import get_logger
 
-FORMAT = "%(message)s"
-logging.basicConfig(
-    level="NOTSET", format=FORMAT, datefmt="[%X]", handlers=[RichHandler()]
-)
-
-log = logging.getLogger("rich")
+logger = get_logger(__name__)
 global_settings = config.get_settings()
 
 app = FastAPI()
@@ -28,18 +20,21 @@ async def init_mongo() -> AsyncIOMotorClient:
 
 @app.on_event("startup")
 async def startup_event():
-    # TODO: add rich to log with emojis \m/
-    log.info("FARM message: Starting greens on your farmland...")
+    logger.info("Starting greens on your farmland...")
     app.state.mongo_client, app.state.mongo_database, app.state.mongo = await init_mongo()
+    app.logger = logger
 
 
 @app.on_event("shutdown")
 async def shutdown_event():
-    log.info("FARM message: Shutting down - your tractors were parked in garage...")
+    logger.info("Parking tractors in garage...")
 
 
-# @app.get("/health-check")
-# async def health_check():
-#     # TODO: check settings dependencies passing as args and kwargs
-#     stuff = await database.add_stuff()
-#     return stuff
+@app.get("/health-check")
+async def health_check():
+    # TODO: check settings dependencies passing as args and kwargs
+    # stuff = await database.add_stuff()
+    try:
+        assert 5 / 0
+    except Exception:
+        logger.exception("My way or highway...")
