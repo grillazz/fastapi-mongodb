@@ -1,16 +1,10 @@
-import logging
 import os
 from functools import lru_cache
 
 from pydantic import BaseSettings
-from rich.logging import RichHandler
+from greens.utils import get_logger
 
-FORMAT = "%(message)s"
-logging.basicConfig(
-    level="NOTSET", format=FORMAT, datefmt="[%X]", handlers=[RichHandler()]
-)
-
-log = logging.getLogger("rich")
+logger = get_logger(__name__)
 
 
 class Settings(BaseSettings):
@@ -41,5 +35,5 @@ class Settings(BaseSettings):
 
 @lru_cache()
 def get_settings():
-    log.info("FARM message: Loading config settings from the environment...")
+    logger.info("Loading config settings from the environment...")
     return Settings()
