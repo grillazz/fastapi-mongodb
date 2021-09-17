@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from motor.motor_asyncio import AsyncIOMotorClient
+
 from greens import config
 from greens.utils import get_logger
 
@@ -34,6 +35,7 @@ async def shutdown_event():
 async def health_check():
     # TODO: check settings dependencies passing as args and kwargs
     # stuff = await database.add_stuff()
+    a = 5
     try:
         assert 5 / 0
     except Exception:

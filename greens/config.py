@@ -2,6 +2,7 @@ import os
 from functools import lru_cache
 
 from pydantic import BaseSettings
+
 from greens.utils import get_logger
 
 logger = get_logger(__name__)
