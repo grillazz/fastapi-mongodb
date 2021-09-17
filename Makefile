@@ -27,8 +27,18 @@ test:	## Run project tests
 	docker-compose run --rm web pytest -vv
 
 .PHONY: lint
-lint:  ## Linter project code.
-	black --line-length=120 . --exclude="/(\.eggs|\.git|\.hg|\.mypy_cache|\.nox|\.tox|\.venv|\.svn|_build|buck-out|build|dist|fixtures)/"
-	isort .
-	mypy --ignore-missing-imports greens
-	flake8 --config .flake8 .
+lint:	## Linter project code.
+	isort  -rc -m 3 --tc .
+	black --line-length=120 .
+
+.PHONY: mypy
+mypy:	## mypy check.
+	mypy --ignore-missing-imports .
+
+.PHONY: flake8
+flake8:  ## flake8 check.
+	flake8 .
+
+.PHONY: safety
+safety:  ## apply safety check in project.
+	safety check

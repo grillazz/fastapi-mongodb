@@ -18,6 +18,7 @@ httpx = "*"
 requests = "*"
 icecream = "*"
 rich = "*"
+safety = "*"
 
 [dev-packages]
 
