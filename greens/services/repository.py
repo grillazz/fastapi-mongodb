@@ -1,5 +1,5 @@
 from bson import ObjectId
-from greens.main import app
+from greens import main as greens
 
 
 async def get_document(document_id: str, collection: str) -> dict:
@@ -15,7 +15,7 @@ async def get_document(document_id: str, collection: str) -> dict:
         ValueError: if document for ObjectId not exists in collection
     """
     document_filter = {"_id": ObjectId(document_id)}
-    if document := await app.state.mongo[collection].find_one(document_filter):
+    if document := await greens.app.state.mongo[collection].find_one(document_filter):
         # return research_object_helper(research_object)
         return document
     else:
