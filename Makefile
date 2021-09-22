@@ -12,7 +12,7 @@ up:	## Run project with compose
 
 .PHONY: down
 down: ## Reset project containers with compose
-	docker-compose down
+	docker-compose down -v --remove-orphans
 
 .PHONY: lock
 lock:	## Refresh pipfile.lock

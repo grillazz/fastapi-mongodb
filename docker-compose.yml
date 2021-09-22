@@ -23,7 +23,7 @@ services:
     env_file:
       - .env
     ports:
-      - "27017:27017"
+      - "27018:27018"
     environment:
       - "MONGO_INITDB_DATABASE=${MONGO_DB}"
       - "MONGO_INITDB_ROOT_USERNAME=${MONGO_USER}"

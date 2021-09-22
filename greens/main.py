@@ -2,12 +2,15 @@ from fastapi import FastAPI
 from motor.motor_asyncio import AsyncIOMotorClient
 
 from greens import config
+from greens.routers.api import router as v1
 from greens.utils import get_logger
 
 logger = get_logger(__name__)
 global_settings = config.get_settings()
 
 app = FastAPI()
+
+app.include_router(v1, prefix="/api/v1")
 
 
 async def init_mongo() -> AsyncIOMotorClient:
