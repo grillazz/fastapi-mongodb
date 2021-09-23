@@ -1,10 +1,6 @@
-from typing import Optional
-
-from bson import ObjectId
-from pydantic import BaseModel, Field, root_validator
-
 from bson import ObjectId
 from bson.errors import InvalidId
+from pydantic import BaseModel, Field
 
 
 class ObjectIdField(str):
@@ -23,12 +19,6 @@ class ObjectIdField(str):
 class Document(BaseModel):
     name: str = Field(...)
     desc: str = Field(...)
-
-    # @root_validator()
-    # def validation(cls, values):
-    #     if values["id"] and not ObjectId.is_valid(values["id"]):
-    #         raise ValueError("Research Object ID is not valid.")
-    #     return values
 
     class Config:
         allow_population_by_field_name = True
