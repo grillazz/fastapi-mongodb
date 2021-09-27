@@ -9,7 +9,8 @@ services:
       uvicorn greens.main:app
       --host 0.0.0.0 --port 8989
       --lifespan=on --use-colors --loop uvloop --http httptools
-      --reload --log-level debug
+      --log-config=log-conf.yaml
+      --reload
       "
     volumes:
       - .:/app
@@ -23,7 +24,7 @@ services:
     env_file:
       - .env
     ports:
-      - "27018:27018"
+      - "27017:27017"
     environment:
       - "MONGO_INITDB_DATABASE=${MONGO_DB}"
       - "MONGO_INITDB_ROOT_USERNAME=${MONGO_USER}"
