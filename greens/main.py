@@ -5,8 +5,11 @@ from greens import config
 from greens.routers.api import router as v1
 from greens.utils import get_logger
 
-logger = get_logger(__name__)
 global_settings = config.get_settings()
+
+if global_settings.environment == "local":
+    get_logger('uvicorn')
+
 
 app = FastAPI()
 
@@ -22,16 +25,18 @@ async def init_mongo() -> AsyncIOMotorClient:
     return mongo_client, mongo_database, mongo_collections
 
 
+
 @app.on_event("startup")
 async def startup_event():
-    logger.info("Starting greens on your farmland...")
+    app.state.logger = get_logger(__name__)
+    app.state.logger.info("Starting greens on your farmland...")
     app.state.mongo_client, app.state.mongo_database, app.state.mongo = await init_mongo()
-    app.logger = logger
+
 
 
 @app.on_event("shutdown")
 async def shutdown_event():
-    logger.info("Parking tractors in garage...")
+    app.state.logger.info("Parking tractors in garage...")
 
 
 @app.get("/health-check")
@@ -42,4 +47,4 @@ async def health_check():
     try:
         assert 5 / 0
     except Exception:
-        logger.exception("My way or highway...")
+        app.state.logger.exception("My way or highway...")
