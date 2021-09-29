@@ -1,0 +1,49 @@
+
+name: Unit Tests
+
+on:
+  pull_request:
+    branches: [ main, develop]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      mongodb:
+        image: latest
+        env:
+          MONGO_INITDB_DATABASE: greenhouse
+          MONGO_INITDB_ROOT_USERNAME: farmer
+          MONGO_INITDB_ROOT_PASSWORD: tractor
+        ports:
+          - 27017:27017
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.9
+      - name: Install pipenv
+        run: pip install pipenv
+      - name: Install required libs
+        run: pipenv lock -r > req.txt && pip install -r req.txt
+      - name: Run tests
+        run: pytest
+        env:
+          PYTHONDONTWRITEBYTECODE: 1
+          PYTHONUNBUFFERED: 1
+
+          ENVIRONMENT: test
+          TESTING: 0
+          UP: up
+          DOWN: down
+          WEB_SERVER: web_server
+          MONGO_HOST: mongodb
+          MONGO_PORT: 27017
+          MONGO_USER: farmer
+          MONGO_PASS: tractor
+          MONGO_DB: greenhouse
+          MONGO_COLLECTION: greens
+          MONGO_TEST_DB: farmland
+          MONGO_URL: mongodb://farmer:tractor@mongodb:27017/?retryWrites=true&w=majority
