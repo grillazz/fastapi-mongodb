@@ -1,11 +1,8 @@
-from functools import lru_cache
-
 from fastapi import FastAPI
-from motor.motor_asyncio import AsyncIOMotorClient
 
 from greens import config
 from greens.routers.api import router as v1
-from greens.utils import get_logger
+from greens.utils import get_logger, init_mongo
 
 global_settings = config.get_settings()
 
@@ -18,21 +15,13 @@ app = FastAPI()
 app.include_router(v1, prefix="/api/v1")
 
 
-@lru_cache()
-async def init_mongo(db_name: str) -> AsyncIOMotorClient:
-    mongo_client = AsyncIOMotorClient(global_settings.db_url)
-    mongo_database = mongo_client[db_name]
-    mongo_collections = {
-        global_settings.collection: mongo_database.get_collection(global_settings.collection),
-    }
-    return mongo_client, mongo_database, mongo_collections
-
-
 @app.on_event("startup")
 async def startup_event():
     app.state.logger = get_logger(__name__)
     app.state.logger.info("Starting greens on your farmland...")
-    app.state.mongo_client, app.state.mongo_database, app.state.mongo = await init_mongo(global_settings.db_name)
+    app.state.mongo_client, app.state.mongo_database, app.state.mongo = await init_mongo(
+        global_settings.db_name, global_settings.db_url, global_settings.collection
+    )
 
 
 @app.on_event("shutdown")
