@@ -19,6 +19,7 @@ requests = "*"
 icecream = "*"
 rich = "*"
 safety = "*"
+pyupgrade = "*"
 
 [dev-packages]
 
