@@ -8,7 +8,7 @@ from rich.logging import RichHandler
 console = Console(color_system="256", width=200, style="blue")
 
 
-@lru_cache()
+@lru_cache
 def get_logger(module_name):
     """
 
@@ -26,7 +26,7 @@ def get_logger(module_name):
     return logger
 
 
-@lru_cache()
+@lru_cache
 async def init_mongo(db_name: str, db_url: str, collection: str) -> AsyncIOMotorClient:
     """
 

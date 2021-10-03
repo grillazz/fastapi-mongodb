@@ -34,7 +34,7 @@ class Settings(BaseSettings):
     test_db_name: str = os.getenv("MONGO_TEST_DB", "")
 
 
-@lru_cache()
+@lru_cache
 def get_settings():
     logger.info("Loading config settings from the environment...")
     return Settings()
