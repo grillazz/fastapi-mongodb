@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
 from greens import config
-from greens import routers as v1
+from greens.routers import router as v1
 from greens.utils import get_logger, init_mongo
 
 global_settings = config.get_settings()
