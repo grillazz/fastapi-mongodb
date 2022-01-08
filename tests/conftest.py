@@ -8,6 +8,15 @@ from greens.utils import get_logger
 global_settings = config.get_settings()
 
 
+@pytest.fixture(
+    params=[
+        pytest.param(("asyncio", {"use_uvloop": True}), id="asyncio+uvloop"),
+    ]
+)
+def anyio_backend(request):
+    return request.param
+
+
 @pytest.fixture
 async def client() -> AsyncClient:
     async with AsyncClient(
