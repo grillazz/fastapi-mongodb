@@ -35,6 +35,4 @@ async def create_document(document: dict, collection: str) -> dict:
         document = await greens.app.state.mongo[collection].insert_one(document)
         return await retrieve_document(document.inserted_id, collection)
     except WriteError:
-        raise AlreadyExistsHTTPException(
-            f"Document with {document.inserted_id=} already exists"
-        )
+        raise AlreadyExistsHTTPException(f"Document with {document.inserted_id=} already exists")
