@@ -46,4 +46,4 @@ jobs:
           MONGO_DB: greenhouse
           MONGO_COLLECTION: greens
           MONGO_TEST_DB: farmland
-          MONGO_URL: mongodb://farmer:tractor@mongodb:27017/?retryWrites=true&w=majority
+          MONGO_URL: mongodb://farmer:tractor@127.0.0.1:27017/?retryWrites=true&w=majority

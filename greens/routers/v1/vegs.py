@@ -14,7 +14,7 @@ router = APIRouter()
 
 
 @router.post(
-    "/",
+    "",
     status_code=HTTP_201_CREATED,
     response_description="Document created",
     response_model=DocumentResponse,
