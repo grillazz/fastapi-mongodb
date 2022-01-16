@@ -12,6 +12,7 @@ fastapi = "*"
 uvicorn = {extras = ["standard"], version = "*"}
 motor = "*"
 pydantic = "*"
+pytest = "*"
 pytest-cov = "*"
 httpx = "*"
 icecream = "*"
