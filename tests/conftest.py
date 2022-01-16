@@ -1,3 +1,5 @@
+from typing import AsyncGenerator
+
 import pytest
 from httpx import AsyncClient
 
@@ -18,11 +20,13 @@ def anyio_backend(request):
 
 
 @pytest.fixture
-async def client() -> AsyncClient:
+async def client() -> AsyncGenerator:
     async with AsyncClient(
         app=app,
         base_url="http://testserver",
     ) as client:
         app.state.logger = get_logger(__name__)
-        app.state.mongo = await init_mongo(global_settings.db_name, global_settings.db_url, global_settings.collection)
+        app.state.mongo = await init_mongo(
+            global_settings.test_db_name, global_settings.db_url, global_settings.collection
+        )
         yield client
