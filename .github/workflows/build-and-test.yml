@@ -33,7 +33,6 @@ jobs:
         env:
           PYTHONDONTWRITEBYTECODE: 1
           PYTHONUNBUFFERED: 1
-
           ENVIRONMENT: test
           TESTING: 0
           UP: up

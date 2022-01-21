@@ -27,6 +27,7 @@ def get_logger(module_name):
 
 
 # TODO: check with async version of @lru_cache
+# TODO: define pool size ?
 async def init_mongo(db_name: str, db_url: str, collection: str) -> AsyncIOMotorClient:
     """
 
