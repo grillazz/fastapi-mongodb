@@ -26,9 +26,7 @@ def get_logger(module_name):
     return logger
 
 
-# TODO: check with async version of @lru_cache
-# TODO: define pool size ?
-async def init_mongo(db_name: str, db_url: str, collection: str) -> AsyncIOMotorClient:
+async def init_mongo(db_name: str, db_url: str, collection: str):
     """
 
     Args:
@@ -44,4 +42,5 @@ async def init_mongo(db_name: str, db_url: str, collection: str) -> AsyncIOMotor
     mongo_collections = {
         collection: mongo_database.get_collection(collection),
     }
-    return mongo_collections
+    # return {0: mongo_client, 1: mongo_database, 2: mongo_collections}
+    return mongo_client, mongo_database, mongo_collections
