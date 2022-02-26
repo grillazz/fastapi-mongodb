@@ -26,7 +26,7 @@ async def client() -> AsyncGenerator:
         base_url="http://testserver",
     ) as client:
         app.state.logger = get_logger(__name__)
-        app.state.mongo = await init_mongo(
+        app.state.mongo_client, app.state.mongo_db, app.state.mongo_collection = await init_mongo(
             global_settings.test_db_name, global_settings.db_url, global_settings.collection
         )
         yield client
