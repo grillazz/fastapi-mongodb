@@ -36,3 +36,13 @@ async def create_document(document: dict, collection: str) -> dict:
         return await retrieve_document(document.inserted_id, collection)
     except WriteError:
         raise AlreadyExistsHTTPException(f"Document with {document.inserted_id=} already exists")
+
+
+async def get_mongo_meta() -> dict:
+    list_databases = await greens.app.state.mongo_client.list_database_names()
+    list_of_collections = {}
+    for db in list_databases:
+        list_of_collections[db] = await greens.app.state.mongo_client[db].list_collection_names()
+    mongo_meta = await greens.app.state.mongo_client.server_info()
+    return {"version": mongo_meta["version"], "databases": list_databases, "collections": list_of_collections}
+

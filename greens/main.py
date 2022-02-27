@@ -2,6 +2,7 @@ from fastapi import FastAPI
 
 from greens import config
 from greens.routers import router as v1
+from greens.services.repository import get_mongo_meta
 from greens.utils import get_logger, init_mongo
 
 global_settings = config.get_settings()
@@ -30,10 +31,10 @@ async def shutdown_event():
 
 @app.get("/health-check")
 async def health_check():
-    # TODO: check settings dependencies passing as args and kwargs
-    # stuff = await database.add_stuff()
-    a = 5
-    try:
-        assert 5 / 0
-    except Exception:
-        app.state.logger.exception("My way or highway...")
+    # # TODO: check settings dependencies passing as args and kwargs
+    # a = 5
+    # try:
+    #     assert 5 / 0
+    # except Exception:
+    #     app.state.logger.exception("My way or highway...")
+    return await get_mongo_meta()
