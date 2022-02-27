@@ -31,11 +31,10 @@ async def shutdown_event():
 
 @app.get("/health-check")
 async def health_check():
-    # TODO: check settings dependencies passing as args and kwargs
-    # stuff = await database.add_stuff()
-    a = 5
-    try:
-        assert 5 / 0
-    except Exception:
-        app.state.logger.exception("My way or highway...")
+    # # TODO: check settings dependencies passing as args and kwargs
+    # a = 5
+    # try:
+    #     assert 5 / 0
+    # except Exception:
+    #     app.state.logger.exception("My way or highway...")
     return await get_mongo_meta()
