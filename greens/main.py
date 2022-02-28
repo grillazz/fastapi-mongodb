@@ -18,7 +18,7 @@ app.include_router(v1, prefix="/api/v1")
 @app.on_event("startup")
 async def startup_event():
     app.state.logger = get_logger(__name__)
-    app.state.logger.info("Starting greens on your farmland...")
+    app.state.logger.info("Starting greens on your farmland...mmm")
     app.state.mongo_client, app.state.mongo_db, app.state.mongo_collection = await init_mongo(
         global_settings.db_name, global_settings.db_url, global_settings.collection
     )
