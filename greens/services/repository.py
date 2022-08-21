@@ -45,4 +45,3 @@ async def get_mongo_meta() -> dict:
         list_of_collections[db] = await greens.app.state.mongo_client[db].list_collection_names()
     mongo_meta = await greens.app.state.mongo_client.server_info()
     return {"version": mongo_meta["version"], "databases": list_databases, "collections": list_of_collections}
-
