@@ -1,9 +1,6 @@
 name: Unit Tests
 
-on:
-  push:
-  pull_request:
-    types: [opened, synchronize]
+on: [pull_request]
 
 jobs:
   build:
@@ -29,10 +26,8 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install pipenv
-        run: pip install pipenv
       - name: Install required libs
-        run: pipenv lock -r > req.txt && pip install -r req.txt
+        run: pip install -r requirements.txt
       - name: Run tests
         run: pytest
         env:
