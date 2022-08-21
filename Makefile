@@ -42,3 +42,8 @@ flake8:  ## flake8 check.
 .PHONY: safety
 safety:  ## apply safety check in project.
 	safety check
+
+.PHONY: format
+format:  ## format project code.
+	isort -rc -m 3 --tc .
+	black --line-length=120 .
