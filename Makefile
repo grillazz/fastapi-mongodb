@@ -20,7 +20,7 @@ lock:	## Refresh pipfile.lock
 
 .PHONY: requirements
 requirements:	## Refresh requirements.txt from pipfile.lock
-	pipenv lock -r > requirements.txt
+	pipenv lock --requirements --dev >| requirements.txt
 
 .PHONY: test
 test:	## Run project tests
