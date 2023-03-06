@@ -18,16 +18,11 @@ down: ## Reset project containers with compose
 test:	## Run project tests
 	docker-compose run --rm web pytest -vv
 
-.PHONY: lint
-lint:	## Linter project code.
-	isort  -rc -m 3 --tc .
-	black --line-length=120 .
-
 .PHONY: mypy
 mypy:	## mypy check.
 	mypy --ignore-missing-imports .
 
-.PHONY: flake8
+.PHONY: lint
 flake8:  ## flake8 check.
 	flake8 .
 
@@ -37,5 +32,5 @@ safety:  ## apply safety check in project.
 
 .PHONY: format
 format:  ## format project code.
-	isort -rc -m 3 --tc .
 	black --line-length=120 .
+	isort -rc -m 3 --tc .
