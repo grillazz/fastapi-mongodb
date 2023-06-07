@@ -8,13 +8,13 @@ packages = [{include = "fastapi_mongodb"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-fastapi = "^0.92.0"
-motor = "^3.1.1"
-uvicorn = "^0.20.0"
-pytest-cov = "^4.0.0"
-httpx = "^0.23.3"
-rich = "^13.3.1"
-ruff = "^0.0.254"
+fastapi = "^0.96.0"
+motor = "^3.1.2"
+uvicorn = "^0.22.0"
+pytest-cov = "^4.1.0"
+httpx = "^0.24.1"
+rich = "^13.4.1"
+ruff = "^0.0.271"
 
 
 [build-system]
