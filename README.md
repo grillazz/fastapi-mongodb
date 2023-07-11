@@ -6,10 +6,6 @@
 ![visitors](https://visitor-badge.laobi.icu/badge?page_id=grillazz.fastapi-mongodb")
 [![CI](https://img.shields.io/github/workflow/status/grillazz/fastapi-mongodb/Unit%20Tests/develop)](https://github.com/grillazz/fastapi-mongodb/actions/workflows/build-and-test.yml?query=event%3Apull_request+branch%3Adevelop)
 
-
-
-![fastapi-redis](/static/greens.jpg)
-
 ### Project Description
 
 ### How to Setup

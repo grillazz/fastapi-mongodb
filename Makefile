@@ -34,3 +34,4 @@ safety:  ## apply safety check in project.
 format:  ## format project code.
 	black --line-length=120 .
 	isort -rc -m 3 --tc .
+	

@@ -38,5 +38,3 @@ RUN addgroup --system --gid 1001 "farmer-eleven"
 RUN adduser --system --uid 1001 "farmer-eleven"
 USER "farmer-eleven"
 
-
-CMD [ "/start.sh"]    

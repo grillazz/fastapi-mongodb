@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 
-from greens import config
-from greens.routers import router as v1
-from greens.services.repository import get_mongo_meta
-from greens.utils import get_logger, init_mongo
+from app_name import config
+from app_name.routers import router as v1
+from app_name.services.repository import get_mongo_meta
+from app_name.utils import get_logger, init_mongo
 
 global_settings = config.get_settings()
 
@@ -18,7 +18,7 @@ app.include_router(v1, prefix="/api/v1")
 @app.on_event("startup")
 async def startup_event():
     app.state.logger = get_logger(__name__)
-    app.state.logger.info("Starting greens on your farmland...mmm")
+    app.state.logger.info("Starting app_name on your farmland...mmm")
     app.state.mongo_client, app.state.mongo_db, app.state.mongo_collection = await init_mongo(
         global_settings.db_name, global_settings.db_url, global_settings.collection
     )

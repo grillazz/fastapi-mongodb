@@ -3,9 +3,9 @@ from typing import AsyncGenerator
 import pytest
 from httpx import AsyncClient
 
-from greens import config
-from greens.main import app, init_mongo
-from greens.utils import get_logger
+from app_name import config
+from app_name.main import app, init_mongo
+from app_name.utils import get_logger
 
 global_settings = config.get_settings()
 

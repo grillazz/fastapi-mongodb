@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from greens.routers.v1.vegs import router as vegs_api
+from app_name.routers.v1.vegs import router as vegs_api
 
 router = APIRouter()
 
