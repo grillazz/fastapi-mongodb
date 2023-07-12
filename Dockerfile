@@ -32,11 +32,13 @@ FROM install as app-image
 COPY app_name app_name
 COPY tests tests
 COPY .env ./
+COPY application.py ./
 
-# create a non-root user and switch to it, for security.
-RUN addgroup --system --gid 1001 "farmer-eleven"
-RUN adduser --system --uid 1001 "farmer-eleven"
-USER "farmer-eleven"
+EXPOSE 8989:8989
+
+RUN addgroup --system --gid 1001 "admin-noob"
+RUN adduser --system --uid 1001 "admin-noob"
+USER "admin-noob"
 
 
-CMD [ "/start.sh"]    
+CMD [ "python", "application.py" ]
