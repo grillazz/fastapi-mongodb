@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from app_name.routers.v1.vegs import router as vegs_api
+from app_name.routers.v1.usuarios import router as usuarios
 
 router = APIRouter()
 
-router.include_router(vegs_api, prefix="/vegs", tags=["vegetables"])
+router.include_router(usuarios, prefix="/usuarios", tags=["usuarios"])
