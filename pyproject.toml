@@ -16,6 +16,9 @@ httpx = "^0.25.1"
 rich = "^13.7.0"
 black = "^23.11.0"
 isort = "^5.12.0"
+pydantic-settings = "^2.1.0"
+uvloop = "^0.19.0"
+httptools = "^0.6.1"
 
 [build-system]
 requires = ["poetry-core"]
