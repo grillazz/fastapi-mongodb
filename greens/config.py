@@ -1,27 +1,24 @@
 import os
-from functools import lru_cache
 
-from pydantic import BaseSettings
-
-from greens.utils import get_logger
-
-logger = get_logger(__name__)
+from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
     """
+    Represents the configuration settings for the application.
 
-    BaseSettings, from Pydantic, validates the data so that when we create an instance of Settings,
-    environment and testing will have types of str and bool, respectively.
-
-    Parameters:
-
-
-    Returns:
-    instance of Settings
+    Args:
+        environment (str): The environment in which the application is running. Defaults to "local".
+        testing (str): The testing mode of the application. Defaults to "0".
+        up (str): The up status of the application. Defaults to "up".
+        down (str): The down status of the application. Defaults to "down".
+        web_server (str): The web server used by the application. Defaults to "web_server".
+        db_url (str): The URL of the MongoDB database.
+        db_name (str): The name of the MongoDB database.
+        collection (str): The name of the MongoDB collection.
+        test_db_name (str): The name of the MongoDB test database.
 
     """
-
     environment: str = os.getenv("ENVIRONMENT", "local")
     testing: str = os.getenv("TESTING", "0")
     up: str = os.getenv("UP", "up")
@@ -34,7 +31,4 @@ class Settings(BaseSettings):
     test_db_name: str = os.getenv("MONGO_TEST_DB", "")
 
 
-@lru_cache
-def get_settings():
-    logger.info("Loading config settings from the environment...")
-    return Settings()
+settings = Settings()

@@ -3,11 +3,9 @@ from typing import AsyncGenerator
 import pytest
 from httpx import AsyncClient
 
-from greens import config
+from greens.config import settings as global_settings
 from greens.main import app, init_mongo
 from greens.utils import get_logger
-
-global_settings = config.get_settings()
 
 
 @pytest.fixture(

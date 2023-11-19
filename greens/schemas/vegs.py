@@ -12,8 +12,8 @@ class ObjectIdField(str):
     def validate(cls, value):
         try:
             return ObjectId(str(value))
-        except InvalidId:
-            raise ValueError("Not a valid ObjectId")
+        except InvalidId as e:
+            raise ValueError("Not a valid ObjectId") from e
 
 
 class Document(BaseModel):

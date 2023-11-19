@@ -2,12 +2,11 @@ from fastapi import APIRouter
 from fastapi.encoders import jsonable_encoder
 from starlette.status import HTTP_201_CREATED
 
-from greens import config
+from greens.config import settings as global_settings
 from greens.routers.exceptions import NotFoundHTTPException
 from greens.schemas.vegs import Document, DocumentResponse, ObjectIdField
 from greens.services.repository import create_document, retrieve_document
 
-global_settings = config.get_settings()
 collection = global_settings.collection
 
 router = APIRouter()
