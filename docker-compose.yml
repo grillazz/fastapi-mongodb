@@ -12,7 +12,7 @@ services:
       --reload
       "
     volumes:
-      - .:/app
+      - .:/home/code
     ports:
       - "8989:8989"
     depends_on:
