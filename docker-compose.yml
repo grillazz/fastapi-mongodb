@@ -9,11 +9,10 @@ services:
       uvicorn greens.main:app
       --host 0.0.0.0 --port 8989
       --lifespan=on --use-colors --loop uvloop --http httptools
-      --log-config=log-conf.yaml
       --reload
       "
     volumes:
-      - .:/app
+      - .:/home/code
     ports:
       - "8989:8989"
     depends_on:

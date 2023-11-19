@@ -24,7 +24,7 @@ async def retrieve_document(document_id: str, collection: str) -> dict:
         raise ValueError(f"No document found for {document_id=} in {collection=}")
 
 
-async def create_document(document: dict, collection: str) -> dict:
+async def create_document(document, collection: str) -> dict:
     """
 
     :param document:
@@ -32,8 +32,9 @@ async def create_document(document: dict, collection: str) -> dict:
     :return:
     """
     try:
-        document = await greens.app.state.mongo_collection[collection].insert_one(document)
-        return await retrieve_document(document.inserted_id, collection)
+        document = await greens.app.state.mongo_collection[collection].insert_one(document.model_dump())
+        # TODO: return await retrieve_document(document.inserted_id, collection)
+        return True
     except WriteError:
         raise AlreadyExistsHTTPException(f"Document with {document.inserted_id=} already exists")
 

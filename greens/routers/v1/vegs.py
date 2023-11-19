@@ -2,12 +2,11 @@ from fastapi import APIRouter
 from fastapi.encoders import jsonable_encoder
 from starlette.status import HTTP_201_CREATED
 
-from greens import config
+from greens.config import settings as global_settings
 from greens.routers.exceptions import NotFoundHTTPException
 from greens.schemas.vegs import Document, DocumentResponse, ObjectIdField
 from greens.services.repository import create_document, retrieve_document
 
-global_settings = config.get_settings()
 collection = global_settings.collection
 
 router = APIRouter()
@@ -17,7 +16,7 @@ router = APIRouter()
     "",
     status_code=HTTP_201_CREATED,
     response_description="Document created",
-    response_model=DocumentResponse,
+    # response_model=DocumentResponse,
 )
 async def add_document(payload: Document):
     """
@@ -26,7 +25,7 @@ async def add_document(payload: Document):
     :return:
     """
     try:
-        payload = jsonable_encoder(payload)
+        # payload = jsonable_encoder(payload)
         return await create_document(payload, collection)
     except ValueError as exception:
         raise NotFoundHTTPException(msg=str(exception))
@@ -35,7 +34,7 @@ async def add_document(payload: Document):
 @router.get(
     "/{object_id}",
     response_description="Document retrieved",
-    response_model=DocumentResponse,
+    # response_model=DocumentResponse,
 )
 async def get_document(object_id: ObjectIdField):
     """

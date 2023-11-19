@@ -1,11 +1,10 @@
 from fastapi import FastAPI
 
-from greens import config
+from greens.config import settings as global_settings
 from greens.routers import router as v1
 from greens.services.repository import get_mongo_meta
 from greens.utils import get_logger, init_mongo
 
-global_settings = config.get_settings()
 
 if global_settings.environment == "local":
     get_logger("uvicorn")
