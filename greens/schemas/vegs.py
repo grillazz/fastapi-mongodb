@@ -4,19 +4,6 @@ from pydantic import BaseModel, Field, ConfigDict, AfterValidator
 from typing_extensions import Annotated
 
 
-# class ObjectIdField(str):
-#     @classmethod
-#     def __get_validators__(cls):
-#         yield cls.validate
-#
-#     @classmethod
-#     def validate(cls, value):
-#         try:
-#             return ObjectId(str(value))
-#         except InvalidId as e:
-#             raise ValueError("Not a valid ObjectId") from e
-
-
 def check_object_id(value: str) -> str:
     if not _ObjectId.is_valid(value):
         raise ValueError('Invalid ObjectId')
@@ -36,5 +23,5 @@ class Document(BaseModel):
     desc: str = Field(...)
 
 
-class DocumentResponse(Document):
-    id: ObjectIdField
+class DocumentResponse(BaseModel):
+    id: ObjectIdField = Field(...)

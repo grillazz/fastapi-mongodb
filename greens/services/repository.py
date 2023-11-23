@@ -1,5 +1,6 @@
 from bson import ObjectId
 from pymongo.errors import WriteError
+from pymongo.results import InsertOneResult
 
 import greens.main as greens
 from greens.routers.exceptions import AlreadyExistsHTTPException
@@ -24,7 +25,7 @@ async def retrieve_document(document_id: str, collection: str) -> dict:
         raise ValueError(f"No document found for {document_id=} in {collection=}")
 
 
-async def create_document(document, collection: str) -> dict:
+async def create_document(document, collection: str) -> InsertOneResult:
     """
 
     :param document:
@@ -32,12 +33,11 @@ async def create_document(document, collection: str) -> dict:
     :return:
     """
     try:
-        document = await greens.app.state.mongo_collection[collection].insert_one(document.model_dump())
-        # TODO: return await retrieve_document(document.inserted_id, collection)
-        return True
-    except WriteError:
-        raise AlreadyExistsHTTPException(f"Document with {document.inserted_id=} already exists")
-
+        document: InsertOneResult = await greens.app.state.mongo_collection[collection].insert_one(document.model_dump())
+        return document
+    except WriteError as e:
+        # TODO: this not make sense as id from mongo will be always unique if we not pass it
+        raise AlreadyExistsHTTPException(msg=str(e)) from e
 
 async def get_mongo_meta() -> dict:
     list_databases = await greens.app.state.mongo_client.list_database_names()

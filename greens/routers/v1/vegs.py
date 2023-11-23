@@ -26,15 +26,16 @@ async def add_document(payload: Document):
     """
     try:
         # payload = jsonable_encoder(payload)
-        return await create_document(payload, collection)
+        document = await create_document(payload, collection)
+        return {"id": str(document.inserted_id)}
     except ValueError as exception:
-        raise NotFoundHTTPException(msg=str(exception))
+        raise NotFoundHTTPException(msg=str(exception)) from exception
 
 
 @router.get(
     "/{object_id}",
     response_description="Document retrieved",
-    # response_model=DocumentResponse,
+    response_model=DocumentResponse,
 )
 async def get_document(object_id: ObjectIdField):
     """
@@ -45,7 +46,7 @@ async def get_document(object_id: ObjectIdField):
     try:
         return await retrieve_document(object_id, collection)
     except ValueError as exception:
-        raise NotFoundHTTPException(msg=str(exception))
+        raise NotFoundHTTPException(msg=str(exception)) from exception
 
 
 # TODO: PUT for replace aka set PATCH for update ?
