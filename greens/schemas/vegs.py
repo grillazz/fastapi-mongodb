@@ -1,6 +1,5 @@
 from bson import ObjectId as _ObjectId
-from bson.errors import InvalidId
-from pydantic import BaseModel, Field, ConfigDict, AfterValidator, BeforeValidator
+from pydantic import BaseModel, ConfigDict, BeforeValidator
 from typing_extensions import Annotated
 
 
@@ -30,7 +29,6 @@ def check_object_id(value: _ObjectId) -> str:
 
 
 ObjectIdField = Annotated[str, BeforeValidator(check_object_id)]
-
 
 config = ConfigDict(arbitrary_types_allowed=True, populate_by_name=True)
 

@@ -4,15 +4,15 @@ version = "0.3.0"
 description = ""
 authors = ["Jakub Miazek <the@grillazz.com>"]
 readme = "README.md"
-packages = [{include = "fastapi_mongodb"}]
+packages = [{ include = "fastapi_mongodb" }]
 
 [tool.poetry.dependencies]
 python = "^3.11"
 fastapi = "^0.109.2"
-pydantic = {version = "2.6.1", extras = ["email"]}
+pydantic = { version = "2.6.1", extras = ["email"] }
 pydantic-settings = "2.2.0"
 motor = "^3.3.2"
-uvicorn = { version = "0.27.1", extras = ["standard"]}
+uvicorn = { version = "0.27.1", extras = ["standard"] }
 pytest = "^8.0.0"
 pytest-cov = "^4.1.0"
 httpx = "^0.26.0"

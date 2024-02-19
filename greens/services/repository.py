@@ -33,11 +33,13 @@ async def create_document(document, collection: str) -> InsertOneResult:
     :return:
     """
     try:
-        document: InsertOneResult = await greens.app.state.mongo_collection[collection].insert_one(document.model_dump())
+        document: InsertOneResult = await greens.app.state.mongo_collection[collection].insert_one(
+            document.model_dump())
         return document
     except WriteError as e:
         # TODO: this not make sense as id from mongo will be always unique if we not pass it
         raise AlreadyExistsHTTPException(msg=str(e)) from e
+
 
 async def get_mongo_meta() -> dict:
     list_databases = await greens.app.state.mongo_client.list_database_names()

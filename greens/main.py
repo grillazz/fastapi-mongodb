@@ -7,9 +7,9 @@ from greens.routers import router as v1
 from greens.services.repository import get_mongo_meta
 from greens.utils import get_logger, init_mongo
 
-
 if global_settings.environment == "local":
     get_logger("uvicorn")
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -23,12 +23,10 @@ async def lifespan(app: FastAPI):
     finally:
         app.state.logger.info("Parking tractors in garage...")
 
+
 app = FastAPI(lifespan=lifespan, title="Greens API", version="0.3.0")
 
 app.include_router(v1, prefix="/api/v1")
-
-
-
 
 
 @app.get("/health-check")

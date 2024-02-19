@@ -9,10 +9,10 @@ pytestmark = pytest.mark.anyio
 @pytest.mark.parametrize(
     "payload, status_code",
     (
-        (
-            {"name": "Corn", "desc": "Corn on the cob"},
-            status.HTTP_201_CREATED,
-        ),
+            (
+                    {"name": "Corn", "desc": "Corn on the cob"},
+                    status.HTTP_201_CREATED,
+            ),
     ),
 )
 # Test document create endpoint
