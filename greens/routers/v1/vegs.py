@@ -16,7 +16,7 @@ router = APIRouter()
     "",
     status_code=HTTP_201_CREATED,
     response_description="Document created",
-    # response_model=DocumentResponse,
+    response_model=DocumentResponse,
 )
 async def add_document(payload: Document):
     """
@@ -45,7 +45,7 @@ async def get_document(object_id: ObjectIdField):
     """
     try:
         return await retrieve_document(object_id, collection)
-    except ValueError as exception:
+    except (ValueError, TypeError) as exception:
         raise NotFoundHTTPException(msg=str(exception)) from exception
 
 

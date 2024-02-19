@@ -30,7 +30,7 @@ def test_document_response_with_valid_id(test_id, object_id):
     document_response = DocumentResponse(id=object_id)
 
     # Assert
-    assert document_response.id == object_id, f"Test case {test_id} failed: The id field did not match the input ObjectId."
+    assert document_response.id == str(object_id), f"Test case {test_id} failed: The id field did not match the input ObjectId."
 
 
 # Edge cases
