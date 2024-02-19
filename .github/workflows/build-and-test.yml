@@ -34,7 +34,7 @@ jobs:
 
     services:
       mongodb:
-        image: mongo:7.0.3
+        image: mongo:latest
         env:
           MONGO_INITDB_DATABASE: greenhouse
           MONGO_INITDB_ROOT_USERNAME: farmer
