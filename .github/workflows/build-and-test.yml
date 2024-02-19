@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.11"]
+        python-version: [ "3.11" ]
         poetry-version: [ "1.7.1" ]
 
     env:
@@ -34,7 +34,7 @@ jobs:
 
     services:
       mongodb:
-        image: mongo:7.0.3
+        image: mongo:7.0.5
         env:
           MONGO_INITDB_DATABASE: greenhouse
           MONGO_INITDB_ROOT_USERNAME: farmer

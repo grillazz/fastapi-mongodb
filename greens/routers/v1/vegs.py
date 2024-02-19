@@ -1,5 +1,4 @@
 from fastapi import APIRouter
-from fastapi.encoders import jsonable_encoder
 from starlette.status import HTTP_201_CREATED
 
 from greens.config import settings as global_settings
@@ -47,6 +46,5 @@ async def get_document(object_id: ObjectIdField):
         return await retrieve_document(object_id, collection)
     except (ValueError, TypeError) as exception:
         raise NotFoundHTTPException(msg=str(exception)) from exception
-
 
 # TODO: PUT for replace aka set PATCH for update ?
