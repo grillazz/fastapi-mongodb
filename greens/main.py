@@ -1,3 +1,5 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 
 from greens.config import settings as global_settings
@@ -9,23 +11,24 @@ from greens.utils import get_logger, init_mongo
 if global_settings.environment == "local":
     get_logger("uvicorn")
 
-app = FastAPI()
-
-app.include_router(v1, prefix="/api/v1")
-
-
-@app.on_event("startup")
-async def startup_event():
+@asynccontextmanager
+async def lifespan(app: FastAPI):
     app.state.logger = get_logger(__name__)
     app.state.logger.info("Starting greens on your farmland...mmm")
     app.state.mongo_client, app.state.mongo_db, app.state.mongo_collection = await init_mongo(
         global_settings.db_name, global_settings.db_url, global_settings.collection
     )
+    try:
+        yield
+    finally:
+        app.state.logger.info("Parking tractors in garage...")
+
+app = FastAPI(lifespan=lifespan, title="Greens API", version="0.3.0")
+
+app.include_router(v1, prefix="/api/v1")
 
 
-@app.on_event("shutdown")
-async def shutdown_event():
-    app.state.logger.info("Parking tractors in garage...")
+
 
 
 @app.get("/health-check")
