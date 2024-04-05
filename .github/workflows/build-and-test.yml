@@ -1,18 +1,40 @@
-name: Unit Tests
+name: CI
 
-on: [pull_request]
+on:
+  pull_request:
+  push:
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        python-version: ["3.10"]
       fail-fast: false
+      matrix:
+        python-version: [ "3.12" ]
+        poetry-version: [ "1.7.1" ]
+
+    env:
+      PYTHONDONTWRITEBYTECODE: 1
+      PYTHONUNBUFFERED: 1
+      ENVIRONMENT: test
+      TESTING: 0
+      UP: up
+      DOWN: down
+      WEB_SERVER: web_server
+      MONGO_HOST: mongodb
+      MONGO_PORT: 27017
+      MONGO_USER: farmer
+      MONGO_PASS: tractor
+      MONGO_DB: greenhouse
+      MONGO_COLLECTION: greens
+      MONGO_TEST_DB: farmland
+      MONGO_URL: mongodb://farmer:tractor@127.0.0.1:27017/?retryWrites=true&w=majority
 
     services:
       mongodb:
-        image: mongo:6.0.4
+        image: mongo:7.0.8
         env:
           MONGO_INITDB_DATABASE: greenhouse
           MONGO_INITDB_ROOT_USERNAME: farmer
@@ -27,31 +49,11 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install Poetry
-        uses: snok/install-poetry@v1
-      - name: Load cached venv
-        id: cached-poetry-dependencies
-        uses: actions/cache@v3
+        uses: abatilo/actions-poetry@v2
         with:
-          path: .venv
-          key: venv-${{ runner.os }}-3.11-${{ hashFiles('**/poetry.lock') }}
+          poetry-version: ${{ matrix.poetry-version }}
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: poetry install --no-interaction --no-root
       - name: Test Code
         run: poetry run pytest
-        env:
-          PYTHONDONTWRITEBYTECODE: 1
-          PYTHONUNBUFFERED: 1
-          ENVIRONMENT: test
-          TESTING: 0
-          UP: up
-          DOWN: down
-          WEB_SERVER: web_server
-          MONGO_HOST: mongodb
-          MONGO_PORT: 27017
-          MONGO_USER: farmer
-          MONGO_PASS: tractor
-          MONGO_DB: greenhouse
-          MONGO_COLLECTION: greens
-          MONGO_TEST_DB: farmland
-          MONGO_URL: mongodb://farmer:tractor@127.0.0.1:27017/?retryWrites=true&w=majority

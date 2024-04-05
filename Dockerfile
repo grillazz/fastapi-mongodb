@@ -1,4 +1,4 @@
-FROM python:3.10-slim AS base
+FROM python:3.12-slim-bookworm AS base
 RUN apt-get update \
     && apt-get upgrade -y \
     && apt-get install -y --no-install-recommends curl git build-essential \
@@ -29,8 +29,10 @@ RUN apt-get purge -y curl git build-essential \
 
 FROM install as app-image
 
-COPY greens greens
-COPY tests tests
+ENV PYTHONPATH=/home/code/ PYTHONHASHSEED=0
+
+COPY greens/ greens/
+COPY tests/ tests/
 COPY .env ./
 
 # create a non-root user and switch to it, for security.

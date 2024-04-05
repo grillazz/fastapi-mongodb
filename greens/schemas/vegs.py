@@ -1,30 +1,44 @@
-from bson import ObjectId
-from bson.errors import InvalidId
-from pydantic import BaseModel, Field
+from bson import ObjectId as _ObjectId
+from pydantic import BaseModel, ConfigDict, BeforeValidator
+from typing_extensions import Annotated
 
 
-class ObjectIdField(str):
-    @classmethod
-    def __get_validators__(cls):
-        yield cls.validate
+# def check_object_id(value: str) -> str:
+#     if not _ObjectId.is_valid(value):
+#         raise ValueError('Invalid ObjectId')
+#     return value
 
-    @classmethod
-    def validate(cls, value):
-        try:
-            return ObjectId(str(value))
-        except InvalidId:
-            raise ValueError("Not a valid ObjectId")
+
+def check_object_id(value: _ObjectId) -> str:
+    """
+    Checks if the given _ObjectId is valid and returns it as a string.
+
+    Args:
+        value: The _ObjectId to be checked.
+
+    Returns:
+        str: The _ObjectId as a string.
+
+    Raises:
+        ValueError: If the _ObjectId is invalid.
+    """
+
+    if not _ObjectId.is_valid(value):
+        raise ValueError("Invalid ObjectId")
+    return str(value)
+
+
+ObjectIdField = Annotated[str, BeforeValidator(check_object_id)]
+
+config = ConfigDict(arbitrary_types_allowed=True, populate_by_name=True)
 
 
 class Document(BaseModel):
-    name: str = Field(...)
-    desc: str = Field(...)
+    model_config = config
 
-    class Config:
-        allow_population_by_field_name = True
-        arbitrary_types_allowed = True
-        json_encoders = {ObjectId: str}
+    name: str
+    desc: str
 
 
-class DocumentResponse(Document):
-    id: ObjectIdField = Field(...)
+class DocumentResponse(BaseModel):
+    id: ObjectIdField

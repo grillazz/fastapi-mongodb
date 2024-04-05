@@ -3,11 +3,9 @@ from collections.abc import AsyncGenerator
 import pytest
 from httpx import AsyncClient
 
-from greens import config
+from greens.config import settings as global_settings
 from greens.main import app, init_mongo
 from greens.utils import get_logger
-
-global_settings = config.get_settings()
 
 
 @pytest.fixture(
@@ -22,8 +20,8 @@ def anyio_backend(request):
 @pytest.fixture
 async def client() -> AsyncGenerator:
     async with AsyncClient(
-        app=app,
-        base_url="http://testserver",
+            app=app,
+            base_url="http://testserver",
     ) as client:
         app.state.logger = get_logger(__name__)
         app.state.mongo_client, app.state.mongo_db, app.state.mongo_collection = await init_mongo(

@@ -1,13 +1,11 @@
 from fastapi import APIRouter
-from fastapi.encoders import jsonable_encoder
 from starlette.status import HTTP_201_CREATED
 
-from greens import config
+from greens.config import settings as global_settings
 from greens.routers.exceptions import NotFoundHTTPException
 from greens.schemas.vegs import Document, DocumentResponse, ObjectIdField
 from greens.services.repository import create_document, retrieve_document
 
-global_settings = config.get_settings()
 collection = global_settings.collection
 
 router = APIRouter()
@@ -26,10 +24,11 @@ async def add_document(payload: Document):
     :return:
     """
     try:
-        payload = jsonable_encoder(payload)
-        return await create_document(payload, collection)
+        # payload = jsonable_encoder(payload)
+        document = await create_document(payload, collection)
+        return {"id": str(document.inserted_id)}
     except ValueError as exception:
-        raise NotFoundHTTPException(msg=str(exception))
+        raise NotFoundHTTPException(msg=str(exception)) from exception
 
 
 @router.get(
@@ -45,8 +44,7 @@ async def get_document(object_id: ObjectIdField):
     """
     try:
         return await retrieve_document(object_id, collection)
-    except ValueError as exception:
-        raise NotFoundHTTPException(msg=str(exception))
-
+    except (ValueError, TypeError) as exception:
+        raise NotFoundHTTPException(msg=str(exception)) from exception
 
 # TODO: PUT for replace aka set PATCH for update ?

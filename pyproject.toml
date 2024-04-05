@@ -1,47 +1,27 @@
 [tool.poetry]
 name = "fastapi-mongodb"
-version = "0.1.0"
+version = "0.4.0"
 description = ""
 authors = ["Jakub Miazek <the@grillazz.com>"]
 readme = "README.md"
-packages = [{include = "fastapi_mongodb"}]
+packages = [{ include = "fastapi_mongodb" }]
 
 [tool.poetry.dependencies]
-python = "^3.10"
-fastapi = "^0.96.0"
-motor = "^3.1.2"
-uvicorn = "^0.22.0"
-pytest-cov = "^4.1.0"
-httpx = "^0.24.1"
-rich = "^13.4.1"
-ruff = "^0.0.271"
-black = "^23.0.1"
+python = "^3.12"
+fastapi = "^0.110.1"
+pydantic = { version = "2.6.4", extras = ["email"] }
+pydantic-settings = "2.2.1"
+motor = "^3.4.0"
+uvicorn = { version = "0.29.0", extras = ["standard"] }
+pytest = "^8.1.1"
+pytest-cov = "^5.0.0"
+httpx = "^0.27.0"
+rich = "^13.7.1"
+black = "^24.3.0"
 isort = "^5.12.0"
+uvloop = "^0.19.0"
+httptools = "^0.6.1"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
-
-[tool.ruff]
-line-length = 120
-
-select = ["E", "F", "UP", "N", "C", "B"]
-
-# Exclude a variety of commonly ignored directories.
-exclude = ["alembic",]
-# Assume Python 3.10.
-target-version = "py310"
-
-[tool.ruff.flake8-quotes]
-docstring-quotes = "double"
-
-[tool.ruff.flake8-bugbear]
-extend-immutable-calls = ["fastapi.Depends",]
-
-[tool.pytest.ini_options]
-addopts = "-v --doctest-modules --doctest-glob=*.md --ignore=alembic"
-asyncio_mode = "strict"
-env_files = [".env"]
-
-[tool.tryceratops]
-exclude = ["alembic",]
