@@ -24,7 +24,7 @@ async def lifespan(app: FastAPI):
         app.state.logger.info("Parking tractors in garage...")
 
 
-app = FastAPI(lifespan=lifespan, title="Greens API", version="0.3.0")
+app = FastAPI(lifespan=lifespan, title="Greens API", version="0.4.0")
 
 app.include_router(v1, prefix="/api/v1")
 
