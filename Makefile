@@ -23,8 +23,8 @@ mypy:	## mypy check.
 	mypy --ignore-missing-imports .
 
 .PHONY: lint
-flake8:  ## flake8 check.
-	flake8 .
+lint:  ## Lint project code.
+	poetry run ruff check --fix .
 
 .PHONY: safety
 safety:  ## apply safety check in project.

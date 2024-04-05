@@ -1,6 +1,6 @@
 from bson import ObjectId as _ObjectId
 from pydantic import BaseModel, ConfigDict, BeforeValidator
-from typing_extensions import Annotated
+from typing import Annotated
 
 
 # def check_object_id(value: str) -> str:
