@@ -28,9 +28,9 @@ class Settings(BaseSettings):
     web_server: str = os.getenv("WEB_SERVER", "web_server")
 
     db_url: str = os.getenv("MONGO_URL", "")
-    db_name: str = os.getenv("MONGO_DB", "")
-    collection: str = os.getenv("MONGO_COLLECTION", "")
-    test_db_name: str = os.getenv("MONGO_TEST_DB", "")
+    mongodb_database: str = os.getenv("MONGODB_DATABASE", "")
+    collection: str = os.getenv("MONGODB_COLLECTION", "")
+    mongodb_test: str = os.getenv("MONGODB_TEST", "")
 
     MONGODB_HOST: str
     MONGODB_PORT: int
@@ -48,7 +48,7 @@ class Settings(BaseSettings):
             username=self.MONGODB_USER,
             password=self.MONGODB_PASSWORD,
 
-            path=self.db_name,
+            path=self.mongodb_name, # TODO: url query params goes here
         )
 
 settings = Settings()
