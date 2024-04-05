@@ -1,5 +1,7 @@
 import os
 
+from pydantic import MongoDsn, computed_field
+from pydantic_core import MultiHostUrl
 from pydantic_settings import BaseSettings
 
 
@@ -30,5 +32,23 @@ class Settings(BaseSettings):
     collection: str = os.getenv("MONGO_COLLECTION", "")
     test_db_name: str = os.getenv("MONGO_TEST_DB", "")
 
+    MONGODB_HOST: str
+    MONGODB_PORT: int
+    MONGODB_USER: str
+    MONGODB_PASSWORD: str
+
+    @computed_field
+    @property
+    def mongodb_url(self) -> MongoDsn:
+
+        return MultiHostUrl.build(
+            scheme="mongodb",
+            host=self.MONGODB_HOST,
+            port=self.MONGODB_PORT,
+            username=self.MONGODB_USER,
+            password=self.MONGODB_PASSWORD,
+
+            path=self.db_name,
+        )
 
 settings = Settings()
