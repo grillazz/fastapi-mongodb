@@ -6,7 +6,7 @@ from greens.routers.exceptions import NotFoundHTTPException
 from greens.schemas.vegs import Document, DocumentResponse, ObjectIdField
 from greens.services.repository import create_document, retrieve_document
 
-collection = global_settings.collection
+collection = global_settings.mongodb_collection
 
 router = APIRouter()
 
