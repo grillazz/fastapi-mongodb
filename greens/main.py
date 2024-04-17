@@ -18,7 +18,7 @@ async def lifespan(app: FastAPI):
     app.state.mongo_client, app.state.mongo_db, app.state.mongo_collection = (
         await init_mongo(
             global_settings.mongodb_database,
-            global_settings.mongodb_url,
+            global_settings.mongodb_url.unicode_string(),
             global_settings.mongodb_collection,
         )
     )
@@ -28,7 +28,7 @@ async def lifespan(app: FastAPI):
         app.state.logger.info("Parking tractors in garage...")
 
 
-app = FastAPI(lifespan=lifespan, title="Greens API", version="0.4.0")
+app = FastAPI(lifespan=lifespan, title="Greens API", version="0.5.0")
 
 app.include_router(v1, prefix="/api/v1")
 

@@ -30,8 +30,7 @@ jobs:
       MONGODB_DATABASE: greenhouse
       MONGODB_COLLECTION: greens
       MONGODB_TEST: farmland
-      MONGODB_PARAMS: retryWrites=true&w=majority
-      MONGO_URL: mongodb://farmer:tractor@127.0.0.1:27017/?retryWrites=true&w=majority
+      MONGODB_PARAMS: ?authSource=admin&authMechanism=SCRAM-SHA-1&retryWrites=true&w=majority
 
     services:
       mongodb:

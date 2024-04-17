@@ -38,3 +38,8 @@ safety:  ## apply safety check in project.
 format:  ## format project code.
 	black --line-length=120 .
 	isort -rc -m 3 --tc .
+
+.PHONY: clean
+clean: ## Clean Reset project containers and volumes with compose
+	docker-compose down -v --remove-orphans | true
+	docker-compose rm -f

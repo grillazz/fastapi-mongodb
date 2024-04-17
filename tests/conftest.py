@@ -27,7 +27,7 @@ async def client() -> AsyncGenerator:
         app.state.mongo_client, app.state.mongo_db, app.state.mongo_collection = (
             await init_mongo(
                 global_settings.mongodb_test,
-                global_settings.db_url,
+                global_settings.mongodb_url.unicode_string(),
                 global_settings.mongodb_collection,
             )
         )

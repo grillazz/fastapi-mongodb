@@ -11,11 +11,10 @@ async def test_health_check(client: AsyncClient):
     assert response.json() == snapshot(
         {
             "version": "7.0.8",
-            "databases": ["admin", "config", "farmland", "local"],
+            "databases": ["admin", "config", "local"],
             "collections": {
                 "admin": ["system.users", "system.version"],
                 "config": ["system.sessions"],
-                "farmland": ["greens"],
                 "local": ["startup_log"],
             },
         }

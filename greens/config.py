@@ -14,7 +14,6 @@ class Settings(BaseSettings):
     down: str = os.getenv("DOWN", "down")
     web_server: str = os.getenv("WEB_SERVER", "web_server")
 
-    db_url: str = os.getenv("MONGO_URL", "")
     mongodb_database: str = os.getenv("MONGODB_DATABASE", "")
     mongodb_collection: str = os.getenv("MONGODB_COLLECTION", "")
     mongodb_test: str = os.getenv("MONGODB_TEST", "")
