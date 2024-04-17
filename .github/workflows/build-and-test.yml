@@ -23,7 +23,7 @@ jobs:
       UP: up
       DOWN: down
       WEB_SERVER: web_server
-      MONGODB_HOST: mongodb
+      MONGODB_HOST: 127.0.0.1
       MONGODB_PORT: 27017
       MONGODB_USER: farmer
       MONGODB_PASSWORD: tractor
