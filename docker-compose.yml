@@ -19,7 +19,7 @@ services:
       - mongodb
 
   mongodb:
-    image: mongo:latest
+    image: mongo:7.0.8
     env_file:
       - .env
     ports:
