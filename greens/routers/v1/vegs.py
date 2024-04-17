@@ -47,4 +47,5 @@ async def get_document(object_id: ObjectIdField):
     except (ValueError, TypeError) as exception:
         raise NotFoundHTTPException(msg=str(exception)) from exception
 
+
 # TODO: PUT for replace aka set PATCH for update ?

@@ -18,6 +18,10 @@ down: ## Reset project containers with compose
 test:	## Run project tests
 	docker-compose run --rm web pytest -vv
 
+.PHONY: test-snapshot
+test-snapshot:	## Run project tests
+	docker-compose run --rm web pytest -vv --inline-snapshot=create
+
 .PHONY: mypy
 mypy:	## mypy check.
 	mypy --ignore-missing-imports .
@@ -34,3 +38,8 @@ safety:  ## apply safety check in project.
 format:  ## format project code.
 	black --line-length=120 .
 	isort -rc -m 3 --tc .
+
+.PHONY: clean
+clean: ## Clean Reset project containers and volumes with compose
+	docker-compose down -v --remove-orphans | true
+	docker-compose rm -f
