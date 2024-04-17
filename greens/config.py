@@ -7,6 +7,7 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     """Settings for the application"""
+
     environment: str = os.getenv("ENVIRONMENT", "local")
     testing: str = os.getenv("TESTING", "0")
     up: str = os.getenv("UP", "up")
@@ -33,8 +34,7 @@ class Settings(BaseSettings):
             port=self.MONGODB_PORT,
             username=self.MONGODB_USER,
             password=self.MONGODB_PASSWORD,
-
-            path=self.MONGODB_PARAMS
+            path=self.MONGODB_PARAMS,
         )
 
 

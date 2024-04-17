@@ -8,6 +8,7 @@ from greens.schemas.vegs import DocumentResponse
 # that should accept BSON ObjectId instances. We'll need to mock or construct valid and
 # invalid ObjectId instances for testing.
 
+
 # Helper function to create a valid ObjectId instance
 def create_valid_objectid():
     return ObjectId()
@@ -32,13 +33,15 @@ def test_document_response_with_valid_id(test_id, object_id):
 
     # Assert
     assert document_response.id == str(
-        object_id), f"Test case {test_id} failed: The id field did not match the input ObjectId."
+        object_id
+    ), f"Test case {test_id} failed: The id field did not match the input ObjectId."
 
 
 # Edge cases
 # Assuming edge cases would be related to the boundaries of ObjectId creation and representation
 # Since ObjectId is a specific BSON type, edge cases might not be as relevant here,
 # but we can still test for unusual but valid ObjectIds
+
 
 # Error cases
 @pytest.mark.parametrize(
@@ -55,4 +58,6 @@ def test_document_response_with_invalid_id(test_id, object_id, expected_exceptio
     with pytest.raises(expected_exception) as exc_info:
         DocumentResponse(id=object_id)
 
-    assert str(exc_info.value), f"Test case {test_id} failed: Expected exception {expected_exception} was not raised."
+    assert str(
+        exc_info.value
+    ), f"Test case {test_id} failed: Expected exception {expected_exception} was not raised."
