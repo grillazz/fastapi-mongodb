@@ -18,6 +18,10 @@ down: ## Reset project containers with compose
 test:	## Run project tests
 	docker-compose run --rm web pytest -vv
 
+.PHONY: test-snapshot
+test-snapshot:	## Run project tests
+	docker-compose run --rm web pytest -vv --inline-snapshot=create
+
 .PHONY: mypy
 mypy:	## mypy check.
 	mypy --ignore-missing-imports .
