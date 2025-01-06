@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   web:
     build: .
@@ -11,8 +9,8 @@ services:
       --lifespan=on --use-colors --loop uvloop --http httptools
       --reload
       "
-    volumes:
-      - .:/home/code
+#    volumes:
+#      - :/greens
     ports:
       - "8989:8989"
     depends_on:
