@@ -103,5 +103,5 @@ COPY .env greens/
 RUN <<EOT
 python -V
 python -Im site
-#python -Ic 'import the_app'
+python -Ic 'import uvicorn'
 EOT

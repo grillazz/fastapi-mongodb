@@ -9,8 +9,8 @@ services:
       --lifespan=on --use-colors --loop uvloop --http httptools
       --reload
       "
-#    volumes:
-#      - :/greens
+    volumes:
+      - ./greens:/app/greens
     ports:
       - "8989:8989"
     depends_on:
