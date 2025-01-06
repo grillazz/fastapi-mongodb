@@ -13,7 +13,7 @@ WORKDIR /home/code
 ARG INSTALL_ARGS="--no-root --only main"
 ENV POETRY_HOME="/opt/poetry"
 ENV PATH="$POETRY_HOME/bin:$PATH"
-COPY pyproject.toml poetry.lock ./
+COPY pyproject.tbd poetry.lock ./
 
 # install without virtualenv, since we are inside a container
 RUN poetry config virtualenvs.create false \
