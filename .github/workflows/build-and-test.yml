@@ -12,8 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [ "3.12" ]
-        poetry-version: [ "1.7.1" ]
+        python-version: [ "3.13" ]
 
     env:
       PYTHONDONTWRITEBYTECODE: 1
@@ -43,17 +42,12 @@ jobs:
           - 27017:27017
 
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+
+      - name: Install the latest version of uv and set the python version
+        uses: astral-sh/setup-uv@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install Poetry
-        uses: abatilo/actions-poetry@v2
-        with:
-          poetry-version: ${{ matrix.poetry-version }}
-      - name: Install dependencies
-        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-        run: poetry install --no-interaction --no-root
-      - name: Test Code
-        run: poetry run pytest
+
+      - name: Test with python ${{ matrix.python-version }}
+        run: uv run --frozen pytest

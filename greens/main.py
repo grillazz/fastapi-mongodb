@@ -42,3 +42,4 @@ async def health_check():
     # except Exception:
     #     app.state.logger.exception("My way or highway...")
     return await get_mongo_meta()
+

@@ -13,3 +13,8 @@
 ### How to Setup
 
 ### About logging
+
+### UV knowledge and inspirations
+- https://hynek.me/articles/docker-uv/
+- https://thedataquarry.com/posts/towards-a-unified-python-toolchain/
+- 
