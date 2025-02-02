@@ -13,7 +13,7 @@ async def test_health_check(client: AsyncClient):
             "version": "7.0.8",
             "databases": ["admin", "config", "farmland", "local"],
             "collections": {
-                "admin": ["system.users", "system.version"],
+                "admin": ["system.version", "system.users"],
                 "config": ["system.sessions"],
                 "farmland": ["greens"],
                 "local": ["startup_log"],
