@@ -4,11 +4,11 @@ help: ## Show this help
 
 .PHONY: build
 build:	## Build project with compose
-	docker compose build -f compose.yml
+	docker compose -f compose.yml up
 
 .PHONY: up
 up:	## Run project with compose
-	docker compose up -f compose.yml
+	docker compose -f compose.yml up
 
 .PHONY: down
 down: ## Reset project containers with compose
@@ -20,7 +20,7 @@ test:	## Run project tests
 
 .PHONY: test-snapshot
 test-snapshot:	## Run project tests
-	docker compose -f compose.yml run web pytest --inline-snapshot=create tests
+	docker compose -f compose.yml run --rm web pytest --inline-snapshot=fix tests
 
 .PHONY: mypy
 mypy:	## mypy check.
