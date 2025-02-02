@@ -4,15 +4,15 @@ help: ## Show this help
 
 .PHONY: build
 build:	## Build project with compose
-	docker compose build
+	docker compose -f compose.yml up
 
 .PHONY: up
 up:	## Run project with compose
-	docker compose up
+	docker compose -f compose.yml up
 
 .PHONY: down
 down: ## Reset project containers with compose
-	docker compose down -v --remove-orphans
+	docker compose -f compose.yml down -v --remove-orphans
 
 .PHONY: test
 test:	## Run project tests
@@ -20,7 +20,7 @@ test:	## Run project tests
 
 .PHONY: test-snapshot
 test-snapshot:	## Run project tests
-	docker compose -f compose.yml run web pytest --inline-snapshot=create tests
+	docker compose -f compose.yml run --rm web pytest --inline-snapshot=fix tests
 
 .PHONY: mypy
 mypy:	## mypy check.
@@ -28,7 +28,7 @@ mypy:	## mypy check.
 
 .PHONY: lint
 lint:  ## Lint project code.
-	poetry run ruff check --fix .
+	uv run ruff check --fix .
 
 .PHONY: safety
 safety:  ## apply safety check in project.
@@ -41,5 +41,5 @@ format:  ## format project code.
 
 .PHONY: clean
 clean: ## Clean Reset project containers and volumes with compose
-	docker compose down -v --remove-orphans | true
-	docker compose rm -f
+	docker compose -f compose.yml down -v --remove-orphans | true
+	docker compose -f compose.yml rm -f
