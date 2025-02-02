@@ -20,18 +20,16 @@ def anyio_backend(request):
 @pytest.fixture
 async def client() -> AsyncGenerator[AsyncClient]:
     transport = ASGITransport(
-            app=app,
-        )
+        app=app,
+    )
     async with AsyncClient(
         base_url="http://testserver",
         transport=transport,
     ) as client:
         app.state.logger = get_logger(__name__)
-        app.state.mongo_client, app.state.mongo_db, app.state.mongo_collection = (
-            await init_mongo(
-                global_settings.mongodb_test,
-                global_settings.mongodb_url.unicode_string(),
-                global_settings.mongodb_collection,
-            )
+        app.state.mongo_client, app.state.mongo_db, app.state.mongo_collection = await init_mongo(
+            global_settings.mongodb_test,
+            global_settings.mongodb_url.unicode_string(),
+            global_settings.mongodb_collection,
         )
         yield client

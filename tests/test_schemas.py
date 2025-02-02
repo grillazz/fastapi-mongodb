@@ -58,6 +58,4 @@ def test_document_response_with_invalid_id(test_id, object_id, expected_exceptio
     with pytest.raises(expected_exception) as exc_info:
         DocumentResponse(id=object_id)
 
-    assert str(
-        exc_info.value
-    ), f"Test case {test_id} failed: Expected exception {expected_exception} was not raised."
+    assert str(exc_info.value), f"Test case {test_id} failed: Expected exception {expected_exception} was not raised."

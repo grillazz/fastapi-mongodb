@@ -28,7 +28,7 @@ mypy:	## mypy check.
 
 .PHONY: lint
 lint:  ## Lint project code.
-	poetry run ruff check --fix .
+	uv run ruff check --fix .
 
 .PHONY: safety
 safety:  ## apply safety check in project.
