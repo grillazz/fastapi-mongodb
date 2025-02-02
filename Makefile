@@ -4,23 +4,23 @@ help: ## Show this help
 
 .PHONY: build
 build:	## Build project with compose
-	docker-compose build
+	docker compose build
 
 .PHONY: up
 up:	## Run project with compose
-	docker-compose up
+	docker compose up
 
 .PHONY: down
 down: ## Reset project containers with compose
-	docker-compose down -v --remove-orphans
+	docker compose down -v --remove-orphans
 
 .PHONY: test
 test:	## Run project tests
-	docker-compose run --rm web pytest -vv tests
+	docker compose -f compose.yml run --rm web pytest -vv tests
 
 .PHONY: test-snapshot
 test-snapshot:	## Run project tests
-	docker-compose run --rm web pytest -vv --inline-snapshot=create
+	docker compose -f compose.yml run web pytest --inline-snapshot=create tests
 
 .PHONY: mypy
 mypy:	## mypy check.
@@ -41,5 +41,5 @@ format:  ## format project code.
 
 .PHONY: clean
 clean: ## Clean Reset project containers and volumes with compose
-	docker-compose down -v --remove-orphans | true
-	docker-compose rm -f
+	docker compose down -v --remove-orphans | true
+	docker compose rm -f

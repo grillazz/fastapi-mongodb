@@ -11,6 +11,7 @@ services:
       "
     volumes:
       - ./greens:/app/greens
+      - ./tests:/app/tests
     ports:
       - "8989:8989"
     depends_on:
