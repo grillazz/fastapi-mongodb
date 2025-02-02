@@ -16,7 +16,7 @@ down: ## Reset project containers with compose
 
 .PHONY: test
 test:	## Run project tests
-	docker-compose run --rm web pytest -vv
+	docker-compose run --rm web pytest -vv tests
 
 .PHONY: test-snapshot
 test-snapshot:	## Run project tests

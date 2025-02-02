@@ -50,6 +50,7 @@ COPY --from=build --chown=app:app /app /app
 USER app
 WORKDIR /app
 COPY /greens/ greens/
+COPY /tests/ tests/
 COPY .env greens/
 
 RUN python -V
