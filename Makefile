@@ -4,15 +4,15 @@ help: ## Show this help
 
 .PHONY: build
 build:	## Build project with compose
-	docker compose build
+	docker compose build -f compose.yml
 
 .PHONY: up
 up:	## Run project with compose
-	docker compose up
+	docker compose up -f compose.yml
 
 .PHONY: down
 down: ## Reset project containers with compose
-	docker compose down -v --remove-orphans
+	docker compose -f compose.yml down -v --remove-orphans
 
 .PHONY: test
 test:	## Run project tests
@@ -41,5 +41,5 @@ format:  ## format project code.
 
 .PHONY: clean
 clean: ## Clean Reset project containers and volumes with compose
-	docker compose down -v --remove-orphans | true
-	docker compose rm -f
+	docker compose -f compose.yml down -v --remove-orphans | true
+	docker compose -f compose.yml rm -f
