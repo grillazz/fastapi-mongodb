@@ -15,6 +15,8 @@
 ### About logging
 
 ### UV knowledge and inspirations
+- https://docs.astral.sh/uv/
 - https://hynek.me/articles/docker-uv/
 - https://thedataquarry.com/posts/towards-a-unified-python-toolchain/
-- 
+- https://www.youtube.com/watch?v=ifj-izwXKRA&t=760s > UV and Ruff: Next-gen Python Tooling
+- https://www.youtube.com/watch?v=8UuW8o4bHbw&t=1s > uv IS the Future of Python Packaging! 🐍📦

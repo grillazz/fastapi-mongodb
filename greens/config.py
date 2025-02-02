@@ -27,7 +27,7 @@ class Settings(BaseSettings):
     @computed_field
     @property
     def mongodb_url(self) -> MongoDsn:
-        return MultiHostUrl.build(
+        return MongoDsn.build(
             scheme="mongodb",
             host=self.MONGODB_HOST,
             port=self.MONGODB_PORT,
