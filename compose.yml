@@ -1,6 +1,6 @@
 services:
   web:
-    build: .
+    image: ora:004
     env_file:
       - .env
     command: bash -c "

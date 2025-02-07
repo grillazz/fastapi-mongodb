@@ -1,0 +1,48 @@
+FROM eurolinux/oracle-linux-9:oracle-linux-9-9.4.4-arm64 AS build
+
+RUN dnf install python3.11 python3.11-devel -y
+
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
+
+ENV UV_LINK_MODE=copy \
+    UV_COMPILE_BYTECODE=1 \
+    UV_PYTHON_DOWNLOADS=never \
+    UV_PYTHON=python3.11 \
+    UV_PROJECT_ENVIRONMENT=/ksef
+
+COPY pyproject.toml /_lock/
+COPY uv.lock /_lock/
+
+RUN --mount=type=cache,target=/root/.cache
+RUN cd /_lock  && uv sync \
+    --locked \
+    --no-dev \
+    --no-install-project
+##########################################################################
+FROM eurolinux/oracle-linux-9:oracle-linux-9-9.4.4-arm64
+
+ENV PATH=/ksef/bin:$PATH
+
+RUN groupadd -r ksef
+RUN useradd -r -d /ksef -g ksef -N ksef
+
+STOPSIGNAL SIGINT
+
+RUN dnf install python3.11 -y
+
+RUN dnf clean all
+RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+COPY --from=build --chown=ksef:ksef /ksef /ksef
+
+USER ksef
+WORKDIR /ksef
+COPY /greens/ greens/
+COPY /tests/ tests/
+COPY .env greens/
+
+RUN tar -czvf /tmp/ksef.gz /ksef
+
+RUN python -V
+RUN python -Im site
+RUN python -Ic 'import uvicorn'
