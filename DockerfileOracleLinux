@@ -1,0 +1,51 @@
+FROM eurolinux/oracle-linux-9:oracle-linux-9-9.4.3-arm64 AS build
+
+RUN dnf install python3.12 python3.12-devel -y
+
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
+
+ENV UV_LINK_MODE=copy \
+    UV_COMPILE_BYTECODE=1 \
+    UV_PYTHON_DOWNLOADS=never \
+    UV_PYTHON=python3.12 \
+    UV_PROJECT_ENVIRONMENT=/app
+
+COPY pyproject.toml /_lock/
+COPY uv.lock /_lock/
+
+RUN --mount=type=cache,target=/root/.cache
+RUN cd /_lock  && uv sync \
+    --locked \
+    --no-dev \
+    --no-install-project
+
+# Clean up unnecessary files
+RUN dnf clean all
+RUN rm -rf /var/cache/dnf /var/lib/dnf/history.* /usr/share/doc /usr/share/man /usr/share/info /usr/share/locale /tmp/* /var/tmp/* /root/.cache
+
+FROM eurolinux/oracle-linux-9:oracle-linux-9-9.4.3-arm64
+
+ENV PATH=/app/bin:$PATH
+
+RUN groupadd -r app
+RUN useradd -r -d /app -g app -N app
+
+STOPSIGNAL SIGINT
+
+RUN dnf install python3.12 -y
+
+RUN dnf clean all
+RUN rm -rf /var/cache/dnf /var/lib/dnf/history.* /usr/share/doc /usr/share/man /usr/share/info /usr/share/locale /tmp/* /var/tmp/* /root/.cache
+
+
+COPY --from=build --chown=app:app /app /app
+
+USER app
+WORKDIR /app
+COPY /greens/ greens/
+COPY /tests/ tests/
+COPY .env greens/
+
+RUN python -V
+RUN python -Im site
+RUN python -Ic 'import uvicorn'
