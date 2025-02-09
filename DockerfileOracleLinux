@@ -1,14 +1,14 @@
-FROM eurolinux/oracle-linux-9:oracle-linux-9-9.4.4-arm64 AS build
+FROM eurolinux/oracle-linux-9:oracle-linux-9-9.5.2-amd64 AS build
 
-RUN dnf install python3.11 python3.11-devel -y
+RUN dnf install python3.12 python3.12-devel -y
 
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 
 ENV UV_LINK_MODE=copy \
     UV_COMPILE_BYTECODE=1 \
     UV_PYTHON_DOWNLOADS=never \
-    UV_PYTHON=python3.11 \
-    UV_PROJECT_ENVIRONMENT=/ksef
+    UV_PYTHON=python3.12 \
+    UV_PROJECT_ENVIRONMENT=/app
 
 COPY pyproject.toml /_lock/
 COPY uv.lock /_lock/
@@ -21,27 +21,25 @@ RUN cd /_lock  && uv sync \
 ##########################################################################
 FROM eurolinux/oracle-linux-9:oracle-linux-9-9.4.4-arm64
 
-ENV PATH=/ksef/bin:$PATH
+ENV PATH=/app/bin:$PATH
 
-RUN groupadd -r ksef
-RUN useradd -r -d /ksef -g ksef -N ksef
+RUN groupadd -r app
+RUN useradd -r -d /app -g app -N app
 
 STOPSIGNAL SIGINT
 
-RUN dnf install python3.11 -y
+RUN dnf install python3.12 -y
 
 RUN dnf clean all
 RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-COPY --from=build --chown=ksef:ksef /ksef /ksef
+COPY --from=build --chown=app:app /app /app
 
-USER ksef
-WORKDIR /ksef
+USER app
+WORKDIR /app
 COPY /greens/ greens/
 COPY /tests/ tests/
 COPY .env greens/
-
-RUN tar -czvf /tmp/ksef.gz /ksef
 
 RUN python -V
 RUN python -Im site

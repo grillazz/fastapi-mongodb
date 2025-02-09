@@ -1,0 +1,31 @@
+services:
+  web:
+    image: ora:004
+    env_file:
+      - .env
+    command: bash -c "
+      uvicorn greens.main:app
+      --host 0.0.0.0 --port 8989
+      --lifespan=on --use-colors --loop uvloop --http httptools
+      --reload
+      "
+    volumes:
+      - ./greens:/app/greens
+      - ./tests:/app/tests
+    ports:
+      - "8989:8989"
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo:7.0.8
+    env_file:
+      - .env
+    ports:
+      - "27017:27017"
+    environment:
+      - "MONGO_INITDB_DATABASE=${MONGODB_DATABASE}"
+      - "MONGO_INITDB_ROOT_USERNAME=${MONGODB_USER}"
+      - "MONGO_INITDB_ROOT_PASSWORD=${MONGODB_PASSWORD}"
+    command:
+      mongod --quiet --logpath /dev/null

@@ -53,9 +53,6 @@ COPY /greens/ greens/
 COPY /tests/ tests/
 COPY .env greens/
 
-
-
-
 RUN python -V
 RUN python -Im site
 RUN python -Ic 'import uvicorn'

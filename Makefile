@@ -2,9 +2,13 @@
 help: ## Show this help
 	@egrep -h '\s##\s' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
-.PHONY: build
-build:	## Build project with compose
-	docker compose -f compose.yml up
+.PHONY: build-app
+build-app:	## Build project with compose
+	docker build . -t fastapi-mongodb-ubuntu-app:latest
+
+.PHONY: build-oracle-linux-app
+build-oracle-linux-app:	## Build project with compose on oracle linux
+	docker build . --file DockerfileOracleLinux -t fastapi-mongodb-oracle-app:latest
 
 .PHONY: up
 up:	## Run project with compose
