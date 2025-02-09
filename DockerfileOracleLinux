@@ -1,4 +1,4 @@
-FROM eurolinux/oracle-linux-9:oracle-linux-9-9.5.2-amd64 AS build
+FROM eurolinux/oracle-linux-9:oracle-linux-9-9.4.3-arm64 AS build
 
 RUN dnf install python3.12 python3.12-devel -y
 
@@ -18,8 +18,12 @@ RUN cd /_lock  && uv sync \
     --locked \
     --no-dev \
     --no-install-project
-##########################################################################
-FROM eurolinux/oracle-linux-9:oracle-linux-9-9.4.4-arm64
+
+# Clean up unnecessary files
+RUN dnf clean all
+RUN rm -rf /var/cache/dnf /var/lib/dnf/history.* /usr/share/doc /usr/share/man /usr/share/info /usr/share/locale /tmp/* /var/tmp/* /root/.cache
+
+FROM eurolinux/oracle-linux-9:oracle-linux-9-9.4.3-arm64
 
 ENV PATH=/app/bin:$PATH
 
@@ -31,7 +35,8 @@ STOPSIGNAL SIGINT
 RUN dnf install python3.12 -y
 
 RUN dnf clean all
-RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN rm -rf /var/cache/dnf /var/lib/dnf/history.* /usr/share/doc /usr/share/man /usr/share/info /usr/share/locale /tmp/* /var/tmp/* /root/.cache
+
 
 COPY --from=build --chown=app:app /app /app
 
